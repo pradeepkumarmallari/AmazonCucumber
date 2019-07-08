@@ -1,19 +1,29 @@
 package stepDefinations;
 
+import org.openqa.selenium.WebDriver;
+
 import cucumber.api.java.en.*;
+import reusableMethods.DriverSetup;
+import reusableMethods.ReusableMethods;
 
 public class Cart {
+	WebDriver driver;
+	DriverSetup driverSetup=new DriverSetup();
+	ReusableMethods reusableMethods;
 	
 	@Given("^User has account account in Amazon site$")
 	public void user_has_account_account_in_Amazon_site() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		
+		reusableMethods=new ReusableMethods(driver);
 		
 	}
 
 	@When("^User opens Amazon URL using the \"([^\"]*)\" in \"([^\"]*)\" browser$")
-	public void user_opens_Amazon_URL_using_the_in_browser(String arg1, String arg2) throws Throwable {
+	public void user_opens_Amazon_URL_using_the_in_browser(String url, String browser) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
+		driver=driverSetup.assignBrowser(browser);
+		reusableMethods.openWebSite(url);
 		
 	    
 	}
