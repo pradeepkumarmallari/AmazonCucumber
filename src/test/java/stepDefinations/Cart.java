@@ -1,21 +1,30 @@
 package stepDefinations;
 
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 
 import cucumber.api.java.en.*;
+import locators.HomePage;
+import locators.SignInPage;
 import reusableMethods.DriverSetup;
 import reusableMethods.ReusableMethods;
 
 public class Cart {
 	WebDriver driver;
-	DriverSetup driverSetup=new DriverSetup();
+	DriverSetup driverSetup;
 	ReusableMethods reusableMethods;
+	HomePage homePage;
+	SignInPage signInPage;
+	SoftAssert softAssert;
 	
 	@Given("^User has account account in Amazon site$")
 	public void user_has_account_account_in_Amazon_site() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		
-		reusableMethods=new ReusableMethods(driver);
+		driverSetup=new DriverSetup();
+		softAssert=new SoftAssert();
+		
+		
 		
 	}
 
@@ -23,27 +32,33 @@ public class Cart {
 	public void user_opens_Amazon_URL_using_the_in_browser(String url, String browser) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
 		driver=driverSetup.assignBrowser(browser);
+		reusableMethods=new ReusableMethods(driver);
+		homePage=new HomePage(driver);
+		signInPage=new SignInPage(driver);
 		reusableMethods.openWebSite(url);
+		
 		
 	    
 	}
 
-	@When("^Enter credentials using \"([^\"]*)\" and \"([^\"]*)\"$")
-	public void enter_credentials_using_and(String arg1, String arg2) throws Throwable {
+	@When("^Searches with \"([^\"]*)\" in the search bar$")
+	public void searches_with_in_the_search_bar(String item) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
+		homePage.searchFor(item);
 	    
 	}
 
-	@When("^Click on Sign in button$")
-	public void click_on_Sign_in_button() throws Throwable {
+	@When("^Click on search button$")
+	public void click_on_search_button() throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    
+	    homePage.clickOnSearchbutton();
 	}
 
-	@Then("^User is able to login using credentials$")
-	public void user_is_able_to_login_using_credentials() throws Throwable {
+	@Then("^User is able to find \"([^\"]*)\" in the seach results$")
+	public void user_is_able_to_find_in_the_seach_results(String item) throws Throwable {
 	    // Write code here that turns the phrase above into concrete actions
-	    
+	    softAssert.assertTrue(homePage.isItemPresent(item));
+	    softAssert.assertAll();
 	}
 
 }

@@ -1,15 +1,9 @@
 Feature: Cart Functionality
  		
-   Scenario Outline: Logging into Amazon website
+   Scenario: Finding Amazon firestick using search bar
     Given User has account account in Amazon site
-    When User opens Amazon URL using the "<url>" in "Chrome" browser
-    And Enter credentials using "<username>" and "<password>"
-    And Click on Sign in button
-    Then User is able to login using credentials
+    When User opens Amazon URL using the "https://www.amazon.in/" in "chrome" browser
+    And Searches with "Fire stick" in the search bar
+    And Click on search button
+    Then User is able to find "Fire TV Stick with all-new Alexa Voice Remote" in the seach results
  
-
-	Examples: 
- 	|       username              |password|   url       |
- 	|pradeepkumarmallari@gmail.com|mpk.7099|www.amazon.in|
- 	
- 	
